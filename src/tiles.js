@@ -1,21 +1,19 @@
 import React  from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Tile from './tile';
+import axios from 'axios';
 
 
 class Tiles extends React.Component{
 
     
 state={
-    tiles:[
-        {name:"somany",model:"nit-01",price:200,rating:2,image:"tile1.jpg",status:1,Id:1},
-        {name:"johnson",model:"nit-02",price:100,rating:4,image:"tile2.jpg",status:0,Id:2},
-        {name:"hsil",model:"nit-03",price:150,rating:5,image:"tile3.jpg",status:1,Id:3},
-        {name:"clayhaus",model:"nit-04",price:350,rating:3,image:"tile4.jpg",status:1,Id:4},
-      ],
+    tiles:[],
       search:''
   
   }
+
+  tilesAPI = "http://demo5911200.mockable.io/tiles";
 
   mapCallBack(tile,index){
     return <tr key={index}>
@@ -33,6 +31,29 @@ state={
     this.setState({search:event.target.value});
   }
 
+componentDidMount(){
+  axios.get(this.tilesAPI).then((res)=>{
+    const tiles = res.data;
+    this.setState({tiles:tiles});
+  }
+
+  )
+}
+
+// componentDidMount(){
+//   fetch(this.tilesAPI).then(
+//     function(response){
+//       return response.json();
+//     }
+//   )
+//   .then((data)=>{
+//     const tiles = data;
+//     this.setState({tiles:tiles})
+//   })
+//   .catch(function(error){
+//     console.log(error);
+//   })
+// }
   
   
   render(){
